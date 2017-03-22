@@ -28,10 +28,8 @@ public abstract class AbstractThreadClient extends Thread {
         }
 
         Object inputObject;
-        while (true) {
+        while (!socket.isClosed()) {
             try {
-
-                System.out.println("socket reah " + socket.getInetAddress().isReachable(1000));
                 inputObject = in.readObject();
                 if ((inputObject == null) || inputObject.toString().equalsIgnoreCase("QUIT")) {
                     socket.close();
@@ -59,6 +57,12 @@ public abstract class AbstractThreadClient extends Thread {
                 }
             } catch (IOException ioException) {
                 ioException.printStackTrace();
+                try {
+                    socket.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
             } catch (ClassNotFoundException classNotFoundException) {
                 classNotFoundException.printStackTrace();
             }
