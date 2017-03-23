@@ -1,10 +1,7 @@
 package iq.ven.showdown.database.setup;
 
 
-import iq.ven.showdown.database.ArmorEntity;
-import iq.ven.showdown.database.HeroArchetypeEntity;
-import iq.ven.showdown.database.HeroEntity;
-import iq.ven.showdown.database.WeaponEntity;
+import iq.ven.showdown.database.*;
 import iq.ven.showdown.database.setup.DBSetupSessionFactory;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -25,6 +22,7 @@ public class DBSetupDatabase {
         WeaponEntity weapon = getTestWeapon();
         HeroArchetypeEntity heroArch = getTestHeroArchetype();
         HeroEntity hero = getTestHero(armor, weapon, heroArch);
+        ClientEntity client = getTestClientEntity(hero);
 
 
         Session session = null;
@@ -38,6 +36,8 @@ public class DBSetupDatabase {
             session.save(weapon); //weapon entity setup
             session.save(heroArch); //hero archetype entity setup
             session.save(hero); //hero entity setup
+            session.save(client);//client entity setup
+
 
             session.getTransaction().commit();// commit transaction
         } finally {
@@ -78,5 +78,13 @@ public class DBSetupDatabase {
         HeroArchetypeEntity heroArchetypeEntity = new HeroArchetypeEntity();
         heroArchetypeEntity.setName("maurman");
         return heroArchetypeEntity;
+    }
+
+    private ClientEntity getTestClientEntity(HeroEntity hero) {
+        ClientEntity clientEntity = new ClientEntity();
+        clientEntity.setHero(hero);
+        clientEntity.setUsername("name");
+        clientEntity.setPassword("password");
+        return clientEntity;
     }
 }

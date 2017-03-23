@@ -1,6 +1,7 @@
 package iq.ven.showdown.database;
 
 import iq.ven.showdown.fighting.model.Hero;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 
@@ -10,7 +11,7 @@ import javax.persistence.*;
 @Entity(name = "hero")
 public class HeroEntity implements Hero {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
     @Column(name = "name", nullable = false)

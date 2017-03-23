@@ -21,6 +21,7 @@
         <mapping class="iq.ven.showdown.database.HeroEntity"/>
         <mapping class="iq.ven.showdown.database.WeaponEntity"/>
         <mapping class="iq.ven.showdown.database.HeroArchetypeEntity"/>
+        <mapping class="iq.ven.showdown.database.ClientEntity"/>
 
     </session-factory>
 </hibernate-configuration>

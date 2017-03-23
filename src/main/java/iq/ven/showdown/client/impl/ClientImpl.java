@@ -14,11 +14,11 @@ public class ClientImpl implements Client {
     private int port;
     private String serverIp;
     private  Socket socket;
-    public static void main(String[] args) {
+/*    public static void main(String[] args) {
         ClientImpl client = new ClientImpl();
         client.initServerData();
         client.startClient();
-    }
+    }*/
 
     public int getPort() {
         return port;

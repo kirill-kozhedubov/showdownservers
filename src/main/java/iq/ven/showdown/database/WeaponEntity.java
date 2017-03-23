@@ -1,6 +1,7 @@
 package iq.ven.showdown.database;
 
 import iq.ven.showdown.fighting.model.Weapon;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 
@@ -11,12 +12,15 @@ import javax.persistence.*;
 @Entity(name = "weapon")
 public class WeaponEntity implements Weapon {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     @Column(name = "name", nullable = false)
     private String name;
     @Column(name = "damage", nullable = false)
     private int dmg;
+    @Column(name = "imglink", nullable = false)
+    private String imgLink = "http://i.imgur.com/NbzvoRd.jpg";
+
 
     public int getId() {
         return id;
@@ -40,5 +44,13 @@ public class WeaponEntity implements Weapon {
 
     public void setDmg(int dmg) {
         this.dmg = dmg;
+    }
+
+    public String getImgLink() {
+        return imgLink;
+    }
+
+    public void setImgLink(String imgLink) {
+        this.imgLink = imgLink;
     }
 }

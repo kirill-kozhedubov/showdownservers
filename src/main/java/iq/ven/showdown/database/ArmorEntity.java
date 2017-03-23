@@ -1,6 +1,7 @@
 package iq.ven.showdown.database;
 
 import iq.ven.showdown.fighting.model.Armor;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 
@@ -10,7 +11,7 @@ import javax.persistence.*;
 @Entity(name = "armor")
 public class ArmorEntity implements Armor {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     @Column(name = "name", nullable = false)
     private String name;
@@ -20,6 +21,8 @@ public class ArmorEntity implements Armor {
     private int dodgePercent;
     @Column(name = "armor", nullable = false)
     private int armorPercent;
+    @Column(name = "imglink", nullable = false)/*, insertable = false*/
+    private String imgLink = "http://i.imgur.com/xm2Bikw.jpg";
 
 
     public ArmorEntity() {
@@ -70,5 +73,13 @@ public class ArmorEntity implements Armor {
 
     public void setArmorPercent(int armorPercent) {
         this.armorPercent = armorPercent;
+    }
+
+    public String getImgLink() {
+        return imgLink;
+    }
+
+    public void setImgLink(String imgLink) {
+        this.imgLink = imgLink;
     }
 }
