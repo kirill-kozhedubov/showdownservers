@@ -5,6 +5,8 @@ import iq.ven.showdown.server.model.Server;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by User on 21.03.2017.
@@ -12,6 +14,8 @@ import java.net.Socket;
 public abstract class AbstractServer implements Server {
 
     protected int port;
+    protected List<AbstractThreadClient> clientList = new ArrayList<AbstractThreadClient>();
+
 
     public AbstractServer(int port) {
         this.port = port;
@@ -40,7 +44,9 @@ public abstract class AbstractServer implements Server {
                 System.out.println("I/O error: " + e);
             }
             // new thread for a client
-            new ThreadClientImpl(socket).start();
+            ThreadClientImpl newClient = new ThreadClientImpl(socket);
+            clientList.add(newClient);
+            newClient.start();
         }
     }
 }

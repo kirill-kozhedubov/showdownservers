@@ -13,10 +13,22 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
  */
 public class DBSetupDatabase {
 
-    public void setUpDatabaseColumns() {
-        ApplicationContext applicationContext = new AnnotationConfigApplicationContext(DBSetupSessionFactory.class);
-        SessionFactory sessionFactory = (SessionFactory) applicationContext.getBean("sessionFactoryBean");
 
+
+    private SessionFactory sessionFactory;
+
+    public DBSetupDatabase() {
+        ApplicationContext applicationContext = new AnnotationConfigApplicationContext(DBSetupSessionFactory.class);
+        sessionFactory = (SessionFactory) applicationContext.getBean("sessionFactoryBean");
+    }
+
+    public SessionFactory getSessionFactory() {
+        return sessionFactory;
+    }
+
+    public void setUpDatabaseColumns() {
+
+        SessionFactory sessionFactory = getSessionFactory();
 
         ArmorEntity armor = getTestArmor();
         WeaponEntity weapon = getTestWeapon();
