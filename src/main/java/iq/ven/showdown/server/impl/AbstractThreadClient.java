@@ -114,10 +114,10 @@ public abstract class AbstractThreadClient extends Thread {
 
     protected boolean tryAuthorize(Object initialObject) throws IOException, ClassNotFoundException {
         System.out.println("trying to get data object from client");
+        DBAuthorizeClient dbAuthorizeClient = new DBAuthorizeClient();
         initialObject = in.readObject();
         if (initialObject instanceof InitialDataForServerObject) {
             InitialDataForServerObject initdata = (InitialDataForServerObject) initialObject;
-            DBAuthorizeClient dbAuthorizeClient = new DBAuthorizeClient();
             clientEntity = dbAuthorizeClient.authorize(initdata.getUsername(), initdata.getPassword());
             if (clientEntity != null) {
                 System.out.println("okok client passed");
@@ -128,7 +128,10 @@ public abstract class AbstractThreadClient extends Thread {
                 return false;
             }
         } else if (initialObject instanceof SuccessfulRegistrationObject) {
-
+            SuccessfulRegistrationObject successfulRegistrationObject = (SuccessfulRegistrationObject) initialObject;
+            clientEntity = dbAuthorizeClient.registerAndAuthorize(successfulRegistrationObject);
+            out.writeObject(clientEntity);
+            return true;
         }
         return false;
     }
