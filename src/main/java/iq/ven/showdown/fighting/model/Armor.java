@@ -11,7 +11,7 @@ public interface Armor  extends Imagible{
 
     void setHitPoints(int hitPoints);
 
-    int getDodgePercent();
+/*    int getDodgePercent();*/
 
     int getArmorPercent();
 

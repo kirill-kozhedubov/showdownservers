@@ -4,12 +4,13 @@ import iq.ven.showdown.fighting.model.Hero;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * Created by User on 21.03.2017.
  */
 @Entity(name = "hero")
-public class HeroEntity implements Hero {
+public class HeroEntity implements Hero, Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
@@ -33,8 +34,6 @@ public class HeroEntity implements Hero {
     @Transient
     private int dmg;
     @Transient
-    private int dodge;
-    @Transient
     private int protection;
     @Transient
     private int hp;
@@ -46,7 +45,6 @@ public class HeroEntity implements Hero {
 
     public void heroInitialize() {
         this.dmg = weapon.getDmg();
-        this.dodge = armor.getDodgePercent();
         this.protection = armor.getArmorPercent();
         this.hp = armor.getHitPoints();
         this.armorName = armor.getName();
@@ -66,10 +64,6 @@ public class HeroEntity implements Hero {
 
     public int getDmg() {
         return dmg;
-    }
-
-    public int getDodge() {
-        return dodge;
     }
 
     public int getProtection() {

@@ -37,6 +37,7 @@ public class DBSetupDatabase {
         ClientEntity client = getTestClientEntity(hero);
 
 
+
         Session session = null;
         try {
 
@@ -54,15 +55,19 @@ public class DBSetupDatabase {
             session.getTransaction().commit();// commit transaction
         } finally {
             session.close(); // better use in finally block
-            System.exit(1488);
+            //System.exit(1488);
         }
+
+
+    DBInitialDataSetup dbInitialDataSetup = new DBInitialDataSetup(sessionFactory);
+    dbInitialDataSetup.createInstantialData();
+
 
     }
 
     private ArmorEntity getTestArmor() {
         ArmorEntity armor = new ArmorEntity();
         armor.setArmorPercent(10);
-        armor.setDodgePercent(20);
         armor.setHitPoints(100);
         armor.setName("THE GREAT ARMOR of THE IMMORTAL");
         return armor;

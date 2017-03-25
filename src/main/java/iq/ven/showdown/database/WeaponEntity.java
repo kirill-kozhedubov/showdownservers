@@ -4,13 +4,14 @@ import iq.ven.showdown.fighting.model.Weapon;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * Created by User on 21.03.2017.
  */
 
 @Entity(name = "weapon")
-public class WeaponEntity implements Weapon {
+public class WeaponEntity implements Weapon, Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;

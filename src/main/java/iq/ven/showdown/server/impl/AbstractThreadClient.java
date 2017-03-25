@@ -2,10 +2,14 @@ package iq.ven.showdown.server.impl;
 
 import iq.ven.showdown.client.impl.InitialDataForServerObject;
 import iq.ven.showdown.client.impl.LogInErrorObject;
+import iq.ven.showdown.client.impl.OnlyOnePlayerInLobbyErrorObject;
 import iq.ven.showdown.client.impl.SuccessfulRegistrationObject;
 import iq.ven.showdown.database.ClientEntity;
 import iq.ven.showdown.database.setup.DBAuthorizeClient;
+import iq.ven.showdown.fighting.impl.Lobby;
+import iq.ven.showdown.fighting.model.Fight;
 
+import javax.persistence.Lob;
 import java.io.*;
 import java.net.Socket;
 import java.util.Scanner;
@@ -18,6 +22,9 @@ public abstract class AbstractThreadClient extends Thread {
     protected ClientEntity clientEntity;
     protected ObjectOutputStream out = null;
     protected ObjectInputStream in = null;
+    protected Lobby lobby;
+    protected Fight fight;
+
 
     public AbstractThreadClient(Socket clientSocket) {
         this.socket = clientSocket;
@@ -135,4 +142,39 @@ public abstract class AbstractThreadClient extends Thread {
         }
         return false;
     }
+
+
+    protected void startFight() throws IOException {
+        if (lobby.getClient1() != null && lobby.getClient2() != null) {
+            FightStarter fightStarter = new FightStarter(lobby);
+            fight = fightStarter.startFight();
+        } else {
+            //!TODO show error only 1 player in lobby
+            out.writeObject(new OnlyOnePlayerInLobbyErrorObject());
+        }
+    }
+
+    protected Lobby createLobby() {
+        Lobby lobby = new Lobby(clientEntity, this);
+        this.lobby = lobby;
+        return lobby;
+        //send lobby to user;
+    }
+
+    protected void connectToLobby(Lobby lobby) {
+        lobby.clientConnect(clientEntity, this);
+        this.lobby = lobby;
+        //send lobby to user;
+    }
+
+    protected void sendClientFight() {
+        try {
+            out.writeObject(fight);
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("FAILED TO SEND CLIENT FIGHT");
+        }
+    }
+
+
 }

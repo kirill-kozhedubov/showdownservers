@@ -23,8 +23,6 @@ public interface Hero {
 
     int getProtection();
 
-    int getDodge();
-
     String getArmorName();
 
     String getWeaponName();

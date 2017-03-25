@@ -25,7 +25,7 @@ public class Main {
         ServerImpl server = new ServerImpl(propertyInitializer.getPort());
         server.startServer();*/
 
-        getDBSetupDatabase().setUpDatabaseColumns();
+       // getDBSetupDatabase().setUpDatabaseColumns();
 
 
 /*        DBAuthorizeClient dbAuthorizeClient = new DBAuthorizeClient();

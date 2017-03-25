@@ -5,12 +5,13 @@ import iq.ven.showdown.fighting.model.Imagible;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * Created by User on 21.03.2017.
  */
 @Entity(name = "hero_archetype")
-public class HeroArchetypeEntity implements HeroArchetype {
+public class HeroArchetypeEntity implements HeroArchetype, Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;

@@ -3,12 +3,13 @@ package iq.ven.showdown.database;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * Created by User on 21.03.2017.
  */
 @Entity(name = "clients")
-public class ClientEntity {
+public class ClientEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
