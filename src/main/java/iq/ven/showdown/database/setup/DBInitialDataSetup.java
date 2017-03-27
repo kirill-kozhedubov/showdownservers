@@ -111,7 +111,7 @@ public class DBInitialDataSetup {
         weaponList.add(twoHandedShaurma);
 
         WeaponEntity sixtyNineFist = new WeaponEntity();
-        sixtyNineFist.setName("Fist weapon 69");
+        sixtyNineFist.setName("Fist weapon 6 and 9");
         sixtyNineFist.setDmg(6 + 9);
         sixtyNineFist.setImgLink("http://i.imgur.com/NbzvoRd.jpg"); //placeholder
         weaponList.add(sixtyNineFist);
@@ -143,22 +143,14 @@ public class DBInitialDataSetup {
         armorList.add(suit);
 
         ArmorEntity adidas = new ArmorEntity();
-        adidas.setName("Adidas pants");
+        adidas.setName("Soidier suit");
         adidas.setArmorPercent(30);
         adidas.setHitPoints(100);
         adidas.setImgLink("http://i.imgur.com/xm2Bikw.jpg");//placeholder
         armorList.add(adidas);
 
-
-        ArmorEntity puma = new ArmorEntity();
-        puma.setName("Puma pants");
-        puma.setArmorPercent(25);
-        puma.setHitPoints(120);
-        puma.setImgLink("http://i.imgur.com/xm2Bikw.jpg");//placeholder
-        armorList.add(puma);
-
         ArmorEntity jeansAndNecklace = new ArmorEntity();
-        jeansAndNecklace.setName("Jeans and $ necklace");
+        jeansAndNecklace.setName("Tracker suit");
         jeansAndNecklace.setArmorPercent(60);
         jeansAndNecklace.setHitPoints(50);
         jeansAndNecklace.setImgLink("http://i.imgur.com/xm2Bikw.jpg");//placeholder

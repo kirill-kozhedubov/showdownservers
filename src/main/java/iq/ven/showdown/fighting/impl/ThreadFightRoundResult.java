@@ -1,5 +1,7 @@
 package iq.ven.showdown.fighting.impl;
 
+import iq.ven.showdown.database.ClientEntity;
+
 import java.io.Serializable;
 
 /**
@@ -9,6 +11,8 @@ public class ThreadFightRoundResult implements Serializable {
     private ThreadFightRound round;
     private int player1HpChange;
     private int player2HpChange;
+    private ClientEntity player1Lost;
+    private ClientEntity player2Lost;
 
     //p1stats
     private int p1Attack;
@@ -44,7 +48,15 @@ public class ThreadFightRoundResult implements Serializable {
         player1HpChange = calculatePlayer1HpChange();
         player2HpChange = calculatePlayer2HpChange();
 
+        round.getPlayer1().getHero().setHp(p1Hp - player1HpChange);
+        round.getPlayer2().getHero().setHp(p2Hp - player2HpChange);
 
+        if (round.getPlayer1().getHero().getHp() <= 0) {
+            player1Lost = round.getPlayer1();
+        }
+        if (round.getPlayer2().getHero().getHp() <= 0) {
+            player2Lost = round.getPlayer2();
+        }
     }
 
     private int calculatePlayer1HpChange() {
@@ -81,8 +93,22 @@ public class ThreadFightRoundResult implements Serializable {
 
     @Override
     public String toString() {
-        return "Player 1 attacked " + p1Attack + "and blocked " + p1Block + " and did " + player2HpChange + " damage."
-                + "\nPlayer 2 attacked " + p2Attack + "and blocked " + p2Block + " and did " + player1HpChange + " damage.";
+        String p1name = round.getPlayer1().getUsername();
+        String p2name = round.getPlayer2().getUsername();
+        String p1lose = "\n" + p1name + " lost";
+        String p2lose = "\n" + p2name + " lost";
+        String twoLost = "\n" + "DRAW";
+        String loseMsg = "";
+
+        if (player1Lost != null && player2Lost != null) {
+            loseMsg = twoLost;
+        } else if (player1Lost != null) {
+            loseMsg = p1lose;
+        } else if (player2Lost != null) {
+            loseMsg = p2lose;
+        }
+        return p1name + " attacked " + p1Attack + "and blocked " + p1Block + " and did " + player2HpChange + " damage.\n"
+                + p2name + " attacked " + p2Attack + "and blocked " + p2Block + " and did " + player1HpChange + " damage." + loseMsg;
     }
 }
 

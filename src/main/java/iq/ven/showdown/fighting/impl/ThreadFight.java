@@ -38,13 +38,7 @@ public class ThreadFight extends Thread implements Fight {
         * */
 
 
-
-
-
-
-
     }
-
 
 
     private ThreadFightRoundResult getRoundResults(ThreadFightPlayerTurn player1Turn, ThreadFightPlayerTurn player2Turn) {

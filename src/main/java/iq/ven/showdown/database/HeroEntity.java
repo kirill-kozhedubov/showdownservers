@@ -74,6 +74,10 @@ public class HeroEntity implements Hero, Serializable {
         return hp;
     }
 
+    public void setHp(int hp) {
+        this.hp = hp;
+    }
+
     //Entity Methods
 
 
