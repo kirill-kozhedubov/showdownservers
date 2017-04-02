@@ -91,6 +91,14 @@ public class ThreadFightRoundResult implements Serializable {
         return hpchange;
     }
 
+    public ClientEntity getPlayer1Lost() {
+        return player1Lost;
+    }
+
+    public ClientEntity getPlayer2Lost() {
+        return player2Lost;
+    }
+
     @Override
     public String toString() {
         String p1name = round.getPlayer1().getUsername();

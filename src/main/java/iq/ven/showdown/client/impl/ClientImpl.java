@@ -1,6 +1,7 @@
 package iq.ven.showdown.client.impl;
 
 import iq.ven.showdown.client.model.Client;
+import iq.ven.showdown.database.ClientEntity;
 
 import java.io.*;
 import java.net.InetAddress;
@@ -13,7 +14,9 @@ import java.util.Scanner;
 public class ClientImpl implements Client {
     private int port;
     private String serverIp;
-    private  Socket socket;
+    private Socket socket;
+    private ObjectOutputStream out;
+    private ObjectInputStream in;
 /*    public static void main(String[] args) {
         ClientImpl client = new ClientImpl();
         client.initServerData();
@@ -42,49 +45,57 @@ public class ClientImpl implements Client {
     }
 
     private void startClient() {
+
+        //initial connect and shit...
         try {
-            System.out.println(serverIp + " " + port);
+            System.out.println("ip: " + serverIp + " port: " + port);
             InetAddress ipAddress = InetAddress.getByName(serverIp); // создаем объект который отображает вышеописанный IP-адрес.
-            System.out.println("Any of you heard of a socket with IP address " + serverIp + " and port " + port + "?");
+            System.out.println("Trying to connect..");
             socket = new Socket(ipAddress, port); // создаем сокет используя IP-адрес и порт сервера.
-            System.out.println("Yes! I just got hold of the program.");
+            System.out.println("Yes! I just connected!.");
 
-            // Берем входной и выходной потоки сокета, теперь можем получать и отсылать данные клиентом.
+            out = new ObjectOutputStream(socket.getOutputStream());
+            in = new ObjectInputStream(socket.getInputStream());
 
-
-            // Конвертируем потоки в другой тип, чтоб легче обрабатывать обьекты.
-            ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
-            ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
-
-
+            System.out.println("Any key to continue");
             Scanner scanner = new Scanner(System.in);
-            while (true) {
-                String str = scanner.nextLine();
-
-                TestObjToSend food = new TestObjToSend();
-                out.writeObject(food);
-                out.flush();
-                System.out.println("Sending " + food);
-
-
-                System.out.println("Geting it back from server");
-                TestObjToSend foodIGet = (TestObjToSend) in.readObject();
-                System.out.println("We got " + foodIGet);
-
-                System.out.println("Waiting for next trade");
-                System.out.println();
-
-            }
+            String str = scanner.nextLine();
         } catch (Exception x) {
             x.printStackTrace();
-        }
-        finally {
+        } finally {
             try {
                 socket.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
+
+
+        //login or registration
+        boolean logon = false;
+        while (!logon) {
+            try {
+                logon = tryToLogin("username", "password");
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+
+
+    }// end startClient()
+
+    private boolean tryToLogin(String username, String password) throws IOException, ClassNotFoundException {
+        InitialDataForServerObject sendDataToServer = new InitialDataForServerObject(username, password);
+        out.writeObject(sendDataToServer);
+        Object objectFromServer = in.readObject();
+        if (objectFromServer instanceof LogInErrorObject) {
+            return false;
+        } else if (objectFromServer instanceof ClientEntity) {
+            return true;
+        }
+        return false;
     }
 
 

@@ -1,4 +1,4 @@
-package iq.ven.showdown.server.impl;
+package iq.ven.showdown.server.service;
 
 import iq.ven.showdown.fighting.impl.Lobby;
 import iq.ven.showdown.fighting.impl.ThreadFight;
@@ -15,7 +15,7 @@ public class FightStarter {
     }
 
     public ThreadFight startFight() {
-        ThreadFight fight = new ThreadFight(lobby.getClient1(), lobby.getClient2());
+        ThreadFight fight = new ThreadFight(lobby.getClient1(), lobby.getClient2(), lobby);
         fight.start();
         return fight;
     }

@@ -8,8 +8,8 @@ import iq.ven.showdown.database.ClientEntity;
 import iq.ven.showdown.database.setup.DBAuthorizeClient;
 import iq.ven.showdown.fighting.impl.Lobby;
 import iq.ven.showdown.fighting.model.Fight;
+import iq.ven.showdown.server.service.FightStarter;
 
-import javax.persistence.Lob;
 import java.io.*;
 import java.net.Socket;
 import java.util.Scanner;
@@ -64,6 +64,7 @@ public abstract class AbstractThreadClient extends Thread {
                         this.interrupt();
                         return;
                     } else {//STARTING POINT OF CLIENT-SERVER REALTIONS
+
                         System.out.println("I got the package with " + inputObject.toString());
                         System.out.println("Send it back? y/n");
 
@@ -176,5 +177,15 @@ public abstract class AbstractThreadClient extends Thread {
         }
     }
 
+    public Socket getSocket() {
+        return socket;
+    }
 
+    public ObjectOutputStream getOut() {
+        return out;
+    }
+
+    public ObjectInputStream getIn() {
+        return in;
+    }
 }

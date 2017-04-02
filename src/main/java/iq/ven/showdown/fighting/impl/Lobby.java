@@ -4,6 +4,7 @@ import iq.ven.showdown.database.ClientEntity;
 import iq.ven.showdown.server.impl.AbstractThreadClient;
 
 import java.io.Serializable;
+import java.net.Socket;
 
 /**
  * Created by User on 25.03.2017.
@@ -41,5 +42,13 @@ public class Lobby extends Thread implements Serializable {
 
     public AbstractThreadClient getClient2Thread() {
         return client2Thread;
+    }
+
+    public Socket getClient1Socket() {
+        return client1Thread.getSocket();
+    }
+
+    public Socket getClient2Socket() {
+        return client2Thread.getSocket();
     }
 }
