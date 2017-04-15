@@ -54,4 +54,14 @@ public class WeaponEntity implements Weapon, Serializable {
     public void setImgLink(String imgLink) {
         this.imgLink = imgLink;
     }
+
+    @Override
+    public String toString() {
+        return "WeaponEntity{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", dmg=" + dmg +
+                ", imgLink='" + imgLink + '\'' +
+                '}';
+    }
 }

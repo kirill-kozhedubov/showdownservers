@@ -1,6 +1,7 @@
 package iq.ven.showdown.server.main;
 
 
+import iq.ven.showdown.client.impl.ClientImpl;
 import iq.ven.showdown.database.ClientEntity;
 import iq.ven.showdown.database.setup.DBAuthorizeClient;
 import iq.ven.showdown.database.setup.DBSetupDatabase;
@@ -25,15 +26,15 @@ public class Main {
         ServerImpl server = new ServerImpl(propertyInitializer.getPort());
         server.startServer();*/
 
-       // getDBSetupDatabase().setUpDatabaseColumns();
+        // getDBSetupDatabase().setUpDatabaseColumns();
 
 
 /*        DBAuthorizeClient dbAuthorizeClient = new DBAuthorizeClient();
         ClientEntity clientEntity = dbAuthorizeClient.authorize("name", "password");
 */
 
-
-
+ //       ClientImpl client = new ClientImpl();
+ //      client.initServerData();
 
     }
 

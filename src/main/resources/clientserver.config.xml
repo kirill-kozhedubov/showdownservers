@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<clientserver>
+    <server>
+        <port>1488</port>
+        <ip>127.0.0.1</ip>
+    </server>
+</clientserver>

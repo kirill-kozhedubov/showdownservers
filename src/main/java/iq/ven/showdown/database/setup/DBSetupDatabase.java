@@ -13,8 +13,6 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
  */
 public class DBSetupDatabase {
 
-
-
     private SessionFactory sessionFactory;
 
     public DBSetupDatabase() {

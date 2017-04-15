@@ -52,4 +52,14 @@ public class ClientEntity implements Serializable {
     public void setHero(HeroEntity hero) {
         this.hero = hero;
     }
+
+    @Override
+    public String toString() {
+        return "ClientEntity{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", hero=" + hero +
+                '}';
+    }
 }

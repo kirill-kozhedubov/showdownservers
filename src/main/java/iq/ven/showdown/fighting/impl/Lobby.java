@@ -1,7 +1,10 @@
 package iq.ven.showdown.fighting.impl;
 
 import iq.ven.showdown.database.ClientEntity;
+import iq.ven.showdown.database.setup.DBAuthorizeClient;
 import iq.ven.showdown.server.impl.AbstractThreadClient;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.Serializable;
 import java.net.Socket;
@@ -10,7 +13,6 @@ import java.net.Socket;
  * Created by User on 25.03.2017.
  */
 public class Lobby extends Thread implements Serializable {
-
     private ClientEntity client1;
     private ClientEntity client2;
     private AbstractThreadClient client1Thread;
@@ -50,5 +52,13 @@ public class Lobby extends Thread implements Serializable {
 
     public Socket getClient2Socket() {
         return client2Thread.getSocket();
+    }
+
+    @Override
+    public String toString() {
+        return "Lobby{" +
+                "client1=" + client1 +
+                ", client2=" + client2 +
+                '}';
     }
 }

@@ -8,6 +8,11 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.util.Scanner;
 
+import org.w3c.dom.*;
+
+import javax.xml.parsers.*;
+import java.io.*;
+
 /**
  * Created by User on 22.03.2017.
  */
@@ -39,9 +44,24 @@ public class ClientImpl implements Client {
         this.serverIp = serverIp;
     }
 
-    private void initServerData() {
-        this.port = 1488;
-        this.serverIp = "127.0.0.1";
+    public void initServerData() {
+        try {
+            File xmlFile = new File(this.getClass().getClassLoader().getResource("clientserver.config.xml").toURI());
+            DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
+            Document doc = docBuilder.parse(xmlFile);
+            doc.getDocumentElement().normalize();
+            NodeList nodeList = doc.getElementsByTagName("server");
+            Node node = nodeList.item(0);
+            if (node.getNodeType() == Node.ELEMENT_NODE) {
+                Element element = (Element) node;
+                this.port = Integer.parseInt(element.getElementsByTagName("port").item(0).getTextContent());
+                this.serverIp = element.getElementsByTagName("ip").item(0).getTextContent();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Exception in parsing clientserver.config.xml");
+        }
     }
 
     private void startClient() {

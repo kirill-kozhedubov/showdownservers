@@ -67,4 +67,15 @@ public class ArmorEntity implements Armor, Serializable {
     public void setImgLink(String imgLink) {
         this.imgLink = imgLink;
     }
+
+    @Override
+    public String toString() {
+        return "ArmorEntity{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", hitPoints=" + hitPoints +
+                ", armorPercent=" + armorPercent +
+                ", imgLink='" + imgLink + '\'' +
+                '}';
+    }
 }

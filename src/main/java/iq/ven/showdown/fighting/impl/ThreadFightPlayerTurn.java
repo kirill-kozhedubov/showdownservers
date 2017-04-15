@@ -38,4 +38,11 @@ public class ThreadFightPlayerTurn implements PlayerTurn, Serializable {
         return block;
     }
 
+    @Override
+    public String toString() {
+        return "ThreadFightPlayerTurn{" +
+                "attack=" + attack +
+                ", block=" + block +
+                '}';
+    }
 }

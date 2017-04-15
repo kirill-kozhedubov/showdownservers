@@ -44,4 +44,15 @@ public class ThreadFightRound implements Round, Serializable {
         roundResult = new ThreadFightRoundResult(this);
         return roundResult;
     }
+
+    @Override
+    public String toString() {
+        return "ThreadFightRound{" +
+                "player1Turn=" + player1Turn +
+                ", player2Turn=" + player2Turn +
+                ", player1=" + player1 +
+                ", player2=" + player2 +
+                ", roundResult=" + roundResult +
+                '}';
+    }
 }

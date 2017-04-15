@@ -2,8 +2,12 @@ package iq.ven.showdown.database.setup;
 
 import iq.ven.showdown.client.impl.SuccessfulRegistrationObject;
 import iq.ven.showdown.database.*;
-import iq.ven.showdown.fighting.model.HeroArchetype;
 import iq.ven.showdown.server.main.Main;
+
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+
+import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -15,6 +19,8 @@ import java.util.List;
  * Created by User on 24.03.2017.
  */
 public class DBAuthorizeClient {
+    private static final Logger logger = LogManager.getLogger(DBAuthorizeClient.class);
+
     private SessionFactory sessionFactory = Main.getDBSetupDatabase().getSessionFactory();
 
     public ClientEntity authorize(String username, String password) {
@@ -26,10 +32,10 @@ public class DBAuthorizeClient {
         List<ClientEntity> results = query.list();
         session.close();
         if (results.size() == 1) {
-
+            logger.log(Level.DEBUG, "DBAuthorizeClient.authorize username:" + username + " password:" + password, results.get(0));
             return results.get(0);
         }
-
+        logger.log(Level.ERROR, "DBAuthorizeClient.authorize UNLUCKY username:" + username + " password:" + password);
         return null;
     }
 
@@ -64,6 +70,7 @@ public class DBAuthorizeClient {
         } finally {
             session.close();
         }
+        logger.log(Level.DEBUG, "DBAuthorizeClient.registerAndAuthorize " + successfulRegistrationObject, clientEntity);
         return clientEntity;
     }
 

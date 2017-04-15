@@ -7,8 +7,12 @@ import iq.ven.showdown.client.impl.SuccessfulRegistrationObject;
 import iq.ven.showdown.database.ClientEntity;
 import iq.ven.showdown.database.setup.DBAuthorizeClient;
 import iq.ven.showdown.fighting.impl.Lobby;
+import iq.ven.showdown.fighting.impl.ThreadFight;
 import iq.ven.showdown.fighting.model.Fight;
 import iq.ven.showdown.server.service.FightStarter;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.*;
 import java.net.Socket;
@@ -18,6 +22,8 @@ import java.util.Scanner;
  * Created by User on 21.03.2017.
  */
 public abstract class AbstractThreadClient extends Thread {
+    private static final Logger logger = LogManager.getLogger(AbstractThreadClient.class);
+
     protected Socket socket;
     protected ClientEntity clientEntity;
     protected ObjectOutputStream out = null;
@@ -30,9 +36,8 @@ public abstract class AbstractThreadClient extends Thread {
         this.socket = clientSocket;
     }
 
+    @Override
     public void run() {
-
-
         try {
             out = new ObjectOutputStream(socket.getOutputStream());
             in = new ObjectInputStream(socket.getInputStream());
@@ -102,15 +107,10 @@ public abstract class AbstractThreadClient extends Thread {
                 }
             }
 
-        } catch (
-                Exception e)
-
-        {
+        } catch (Exception e) {
             System.out.println("Client error before in while");
             e.printStackTrace();
-        } finally
-
-        {
+        } finally {
             try {
                 socket.close();
                 this.interrupt();
@@ -120,27 +120,38 @@ public abstract class AbstractThreadClient extends Thread {
         }
     }
 
+    /**
+     * @param initialObject - should be null
+     */
+
     protected boolean tryAuthorize(Object initialObject) throws IOException, ClassNotFoundException {
+
         System.out.println("trying to get data object from client");
+        logger.log(Level.DEBUG, "AbstractThreadClient.tryAuthorize started authorize try", initialObject);
         DBAuthorizeClient dbAuthorizeClient = new DBAuthorizeClient();
         initialObject = in.readObject();
         if (initialObject instanceof InitialDataForServerObject) {
+            logger.log(Level.DEBUG, "AbstractThreadClient.tryAuthorize got InitialDataForServerObject", initialObject);
             InitialDataForServerObject initdata = (InitialDataForServerObject) initialObject;
             clientEntity = dbAuthorizeClient.authorize(initdata.getUsername(), initdata.getPassword());
             if (clientEntity != null) {
-                System.out.println("okok client passed");
+                logger.log(Level.DEBUG, "AbstractThreadClient.tryAuthorize sending ClientEntity to client", clientEntity);
                 out.writeObject(clientEntity);
                 return true;
             } else {
+                logger.log(Level.ERROR, "AbstractThreadClient.tryAuthorize sending LogInErrorObject to client");
                 out.writeObject(new LogInErrorObject());
                 return false;
             }
         } else if (initialObject instanceof SuccessfulRegistrationObject) {
+            logger.log(Level.DEBUG, "AbstractThreadClient.tryAuthorize got SuccessfulRegistrationObject");
             SuccessfulRegistrationObject successfulRegistrationObject = (SuccessfulRegistrationObject) initialObject;
             clientEntity = dbAuthorizeClient.registerAndAuthorize(successfulRegistrationObject);
+            logger.log(Level.DEBUG, "AbstractThreadClient.tryAuthorize sending ClientEntity to client after successful registration", clientEntity);
             out.writeObject(clientEntity);
             return true;
         }
+        logger.log(Level.ERROR, "AbstractThreadClient.tryAuthorize fatal error, method got rekt");
         return false;
     }
 
@@ -149,8 +160,10 @@ public abstract class AbstractThreadClient extends Thread {
         if (lobby.getClient1() != null && lobby.getClient2() != null) {
             FightStarter fightStarter = new FightStarter(lobby);
             fight = fightStarter.startFight();
+            logger.log(Level.DEBUG, "AbstractThreadClient.startFight fight started", fight);
         } else {
             //!TODO show error only 1 player in lobby
+            logger.log(Level.ERROR, "AbstractThreadClient.startFight fight didnt started couse only 1 player in lobby OnlyOnePlayerInLobbyErrorObject");
             out.writeObject(new OnlyOnePlayerInLobbyErrorObject());
         }
     }
@@ -158,22 +171,24 @@ public abstract class AbstractThreadClient extends Thread {
     protected Lobby createLobby() {
         Lobby lobby = new Lobby(clientEntity, this);
         this.lobby = lobby;
+        logger.log(Level.DEBUG, "AbstractThreadClient.createLobby created lobby", lobby);
         return lobby;
-        //send lobby to user;
     }
 
     protected void connectToLobby(Lobby lobby) {
         lobby.clientConnect(clientEntity, this);
         this.lobby = lobby;
-        //send lobby to user;
+        logger.log(Level.DEBUG, "AbstractThreadClient.connectToLobby " + clientEntity + " joined lobby", lobby);
     }
 
     protected void sendClientFight() {
         try {
             out.writeObject(fight);
+            logger.log(Level.DEBUG, "AbstractThreadClient.sendClientFight client " + clientEntity.getUsername() + " got the fight", fight);
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println("FAILED TO SEND CLIENT FIGHT");
+            logger.log(Level.FATAL, "AbstractThreadClient.sendClientFight IOException happened", e);
         }
     }
 

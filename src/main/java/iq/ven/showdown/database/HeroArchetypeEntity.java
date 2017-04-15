@@ -44,4 +44,13 @@ public class HeroArchetypeEntity implements HeroArchetype, Serializable {
     public void setImgLink(String imgLink) {
         this.imgLink = imgLink;
     }
+
+    @Override
+    public String toString() {
+        return "HeroArchetypeEntity{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", imgLink='" + imgLink + '\'' +
+                '}';
+    }
 }

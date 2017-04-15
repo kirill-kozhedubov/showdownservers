@@ -120,4 +120,20 @@ public class HeroEntity implements Hero, Serializable {
     public void setWeapon(WeaponEntity weapon) {
         this.weapon = weapon;
     }
+
+    @Override
+    public String toString() {
+        return "HeroEntity{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", heroArchetype=" + heroArchetype +
+                ", armor=" + armor +
+                ", weapon=" + weapon +
+                ", dmg=" + dmg +
+                ", protection=" + protection +
+                ", hp=" + hp +
+                ", armorName='" + armorName + '\'' +
+                ", weaponName='" + weaponName + '\'' +
+                '}';
+    }
 }

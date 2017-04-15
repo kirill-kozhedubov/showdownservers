@@ -59,4 +59,15 @@ public class SuccessfulRegistrationObject implements Serializable {
     public void setHeroWeaponName(String heroWeaponName) {
         this.heroWeaponName = heroWeaponName;
     }
+
+    @Override
+    public String toString() {
+        return "SuccessfulRegistrationObject{" +
+                "username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", heroArchName='" + heroArchName + '\'' +
+                ", heroArmorName='" + heroArmorName + '\'' +
+                ", heroWeaponName='" + heroWeaponName + '\'' +
+                '}';
+    }
 }
