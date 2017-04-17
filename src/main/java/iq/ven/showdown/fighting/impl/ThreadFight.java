@@ -1,18 +1,14 @@
 package iq.ven.showdown.fighting.impl;
 
 import iq.ven.showdown.client.impl.PlayerLostFightObject;
-import iq.ven.showdown.client.model.Client;
 import iq.ven.showdown.database.ClientEntity;
-import iq.ven.showdown.database.setup.DBAuthorizeClient;
 import iq.ven.showdown.fighting.model.Fight;
-import org.apache.logging.log4j.Level;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +16,7 @@ import java.util.List;
  * Created by User on 21.03.2017.
  */
 public class ThreadFight extends Thread implements Fight {
-    private static final Logger logger = LogManager.getLogger(ThreadFight.class);
+    private static final Logger logger = Logger.getLogger(ThreadFight.class);
 
     private ClientEntity client1;
     private ClientEntity client2;
@@ -111,7 +107,7 @@ public class ThreadFight extends Thread implements Fight {
         ThreadFightRound round = new ThreadFightRound(player1Turn, player2Turn, this);
         ThreadFightRoundResult result = round.generateAndGetRoundResult();
         rounds.add(round);
-        logger.log(Level.DEBUG, "ThreadFight.getRoundResults", round);
+        logger.log(Level.INFO, "ThreadFight.getRoundResults " + round);
         return result;
     }
 
@@ -119,7 +115,7 @@ public class ThreadFight extends Thread implements Fight {
     private boolean sentPlayerLostObject(ObjectOutputStream output) {
         PlayerLostFightObject playerLost = new PlayerLostFightObject();
         try {
-            logger.log(Level.DEBUG, "ThreadFight.sentPlayerLostObject some player lost", playerLost);
+            logger.log(Level.INFO, "ThreadFight.sentPlayerLostObject some player lost " + playerLost);
             output.writeObject(playerLost);
             return true;
         } catch (IOException e) {

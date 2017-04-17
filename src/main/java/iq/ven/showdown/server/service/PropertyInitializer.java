@@ -11,7 +11,7 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
  * Created by User on 21.03.2017.
  */
 @Configuration
-@PropertySource("classpath:serverconfig.properties")
+@PropertySource("classpath:properties/serverconfig.properties")
 public class PropertyInitializer {
 
 

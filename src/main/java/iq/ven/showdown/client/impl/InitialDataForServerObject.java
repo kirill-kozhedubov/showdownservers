@@ -1,7 +1,5 @@
 package iq.ven.showdown.client.impl;
 
-import iq.ven.showdown.database.ClientEntity;
-
 import java.io.Serializable;
 
 /**
@@ -32,5 +30,11 @@ public class InitialDataForServerObject implements Serializable {
         this.password = password;
     }
 
-
+    @Override
+    public String toString() {
+        return "InitialDataForServerObject{" +
+                "username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                '}';
+    }
 }

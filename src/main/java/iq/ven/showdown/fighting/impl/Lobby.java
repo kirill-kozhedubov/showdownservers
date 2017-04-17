@@ -1,10 +1,7 @@
 package iq.ven.showdown.fighting.impl;
 
 import iq.ven.showdown.database.ClientEntity;
-import iq.ven.showdown.database.setup.DBAuthorizeClient;
 import iq.ven.showdown.server.impl.AbstractThreadClient;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.io.Serializable;
 import java.net.Socket;

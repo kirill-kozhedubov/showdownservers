@@ -1,11 +1,7 @@
 package iq.ven.showdown.server.main;
 
 
-import iq.ven.showdown.client.impl.ClientImpl;
-import iq.ven.showdown.database.ClientEntity;
-import iq.ven.showdown.database.setup.DBAuthorizeClient;
 import iq.ven.showdown.database.setup.DBSetupDatabase;
-import iq.ven.showdown.database.setup.DBSetupSessionFactory;
 import iq.ven.showdown.server.impl.ServerImpl;
 import iq.ven.showdown.server.service.PropertyInitializer;
 import org.springframework.context.ApplicationContext;
@@ -18,23 +14,25 @@ public class Main {
     private static DBSetupDatabase dbSetupDatabase = new DBSetupDatabase();
 
     public static void main(String[] args) {
-        /*ApplicationContext applicationContext = new AnnotationConfigApplicationContext(PropertyInitializer.class);
+        ApplicationContext applicationContext = new AnnotationConfigApplicationContext(PropertyInitializer.class);
         PropertyInitializer propertyInitializer = (PropertyInitializer) applicationContext.getBean("serverInfoBean");
         System.out.println("Server data established. port:" + propertyInitializer.getPort() + " ip: " + propertyInitializer.getServer());
 
 
+/*        getDBSetupDatabase().setUpDatabaseColumns();
+        DBInitialDataSetup dbInitialDataSetup = new DBInitialDataSetup(dbSetupDatabase.getSessionFactory());
+        dbInitialDataSetup.createInstantialData();*/
+
         ServerImpl server = new ServerImpl(propertyInitializer.getPort());
-        server.startServer();*/
-
-        // getDBSetupDatabase().setUpDatabaseColumns();
+        server.startServer();
 
 
-/*        DBAuthorizeClient dbAuthorizeClient = new DBAuthorizeClient();
-        ClientEntity clientEntity = dbAuthorizeClient.authorize("name", "password");
-*/
+        //     DBAuthorizeClient dbAuthorizeClient = new DBAuthorizeClient();
+        //     ClientEntity clientEntity = dbAuthorizeClient.authorize("name", "password");
 
- //       ClientImpl client = new ClientImpl();
- //      client.initServerData();
+
+        //       ClientImpl client = new ClientImpl();
+        //      client.initServerData();
 
     }
 

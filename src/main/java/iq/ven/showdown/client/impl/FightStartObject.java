@@ -5,5 +5,5 @@ import java.io.Serializable;
 /**
  * Created by User on 01.04.2017.
  */
-public class FightStartedObject implements Serializable {
+public class FightStartObject implements Serializable {
 }

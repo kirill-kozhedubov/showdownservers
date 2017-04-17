@@ -9,14 +9,19 @@ import iq.ven.showdown.fighting.impl.ThreadFight;
 public class FightStarter {
 
     private Lobby lobby;
+    private ThreadFight fight;
 
     public FightStarter(Lobby lobby) {
         this.lobby = lobby;
     }
 
     public ThreadFight startFight() {
-        ThreadFight fight = new ThreadFight(lobby.getClient1(), lobby.getClient2(), lobby);
+        fight = new ThreadFight(lobby.getClient1(), lobby.getClient2(), lobby);
         fight.start();
+        return fight;
+    }
+
+    public ThreadFight getFight() {
         return fight;
     }
 }

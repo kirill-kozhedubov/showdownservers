@@ -4,10 +4,8 @@ import iq.ven.showdown.client.impl.SuccessfulRegistrationObject;
 import iq.ven.showdown.database.*;
 import iq.ven.showdown.server.main.Main;
 
-import org.apache.logging.log4j.Level;
-import org.apache.logging.log4j.LogManager;
-
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -19,7 +17,7 @@ import java.util.List;
  * Created by User on 24.03.2017.
  */
 public class DBAuthorizeClient {
-    private static final Logger logger = LogManager.getLogger(DBAuthorizeClient.class);
+    private static final Logger logger = Logger.getLogger(DBAuthorizeClient.class);
 
     private SessionFactory sessionFactory = Main.getDBSetupDatabase().getSessionFactory();
 
@@ -31,8 +29,8 @@ public class DBAuthorizeClient {
         query.setParameter("password", password);
         List<ClientEntity> results = query.list();
         session.close();
-        if (results.size() == 1) {
-            logger.log(Level.DEBUG, "DBAuthorizeClient.authorize username:" + username + " password:" + password, results.get(0));
+        if (results.size() >= 1) {
+            logger.log(Level.INFO, "DBAuthorizeClient.authorize username:" + username + " password:" + password + " " + results.get(0));
             return results.get(0);
         }
         logger.log(Level.ERROR, "DBAuthorizeClient.authorize UNLUCKY username:" + username + " password:" + password);
@@ -70,7 +68,7 @@ public class DBAuthorizeClient {
         } finally {
             session.close();
         }
-        logger.log(Level.DEBUG, "DBAuthorizeClient.registerAndAuthorize " + successfulRegistrationObject, clientEntity);
+        logger.log(Level.INFO, "DBAuthorizeClient.registerAndAuthorize " + successfulRegistrationObject + " " + clientEntity);
         return clientEntity;
     }
 

@@ -99,27 +99,27 @@ public class DBInitialDataSetup {
 
 
         WeaponEntity boardBrimHat = new WeaponEntity();
-        boardBrimHat.setName("Kromberg's board-brim hat");
+        boardBrimHat.setName("Боевой цилиндр");
         boardBrimHat.setDmg(15);
-        boardBrimHat.setImgLink("http://i.imgur.com/NbzvoRd.jpg"); //placeholder
+        boardBrimHat.setImgLink("http://i.imgur.com/K5iOCal.jpg"); //placeholder
         weaponList.add(boardBrimHat);
 
         WeaponEntity twoHandedShaurma = new WeaponEntity();
-        twoHandedShaurma.setName("Two-handed shaurma");
+        twoHandedShaurma.setName("Двуручная шаурма");
         twoHandedShaurma.setDmg(20);
-        twoHandedShaurma.setImgLink("http://i.imgur.com/NbzvoRd.jpg"); //placeholder
+        twoHandedShaurma.setImgLink("http://i.imgur.com/x1iWX8M.png"); //placeholder
         weaponList.add(twoHandedShaurma);
 
         WeaponEntity sixtyNineFist = new WeaponEntity();
-        sixtyNineFist.setName("Fist weapon 6 and 9");
+        sixtyNineFist.setName("Кастет номер 69");
         sixtyNineFist.setDmg(6 + 9);
-        sixtyNineFist.setImgLink("http://i.imgur.com/NbzvoRd.jpg"); //placeholder
+        sixtyNineFist.setImgLink("http://i.imgur.com/JNWM2zE.png"); //placeholder
         weaponList.add(sixtyNineFist);
 
         WeaponEntity naziShuriken = new WeaponEntity();
-        naziShuriken.setName("Veniq's special shuriken");
-        naziShuriken.setDmg(14);
-        naziShuriken.setImgLink("http://i.imgur.com/NbzvoRd.jpg"); //placeholder
+        naziShuriken.setName("VENIQUNKNOWN'S SHURIKEN");
+        naziShuriken.setDmg(22);
+        naziShuriken.setImgLink("http://i.imgur.com/KquN8ro.png"); //placeholder
         weaponList.add(naziShuriken);
 
         return weaponList;
@@ -136,26 +136,32 @@ public class DBInitialDataSetup {
         armorList.add(placeholderArmor);
 
         ArmorEntity suit = new ArmorEntity();
-        suit.setName("Kromberg's suit");
+        suit.setName("Костюм");
         suit.setArmorPercent(20);
         suit.setHitPoints(130);
-        suit.setImgLink("http://i.imgur.com/xm2Bikw.jpg");//placeholder
+        suit.setImgLink("http://i.imgur.com/oPtcssB.jpg");//placeholder
         armorList.add(suit);
 
         ArmorEntity adidas = new ArmorEntity();
-        adidas.setName("Soidier suit");
+        adidas.setName("Спортивки");
         adidas.setArmorPercent(30);
         adidas.setHitPoints(100);
-        adidas.setImgLink("http://i.imgur.com/xm2Bikw.jpg");//placeholder
+        adidas.setImgLink("http://i.imgur.com/xY92Uhm.jpg");//placeholder
         armorList.add(adidas);
 
         ArmorEntity jeansAndNecklace = new ArmorEntity();
-        jeansAndNecklace.setName("Tracker suit");
+        jeansAndNecklace.setName("Шляпа");
         jeansAndNecklace.setArmorPercent(60);
         jeansAndNecklace.setHitPoints(50);
-        jeansAndNecklace.setImgLink("http://i.imgur.com/xm2Bikw.jpg");//placeholder
+        jeansAndNecklace.setImgLink("http://i.imgur.com/QVGCZEi.jpg");//placeholder
         armorList.add(jeansAndNecklace);
 
+        ArmorEntity krest = new ArmorEntity();
+        krest.setName("Крест");
+        krest.setArmorPercent(30);
+        krest.setHitPoints(100);
+        krest.setImgLink("http://i.imgur.com/bwfH4B4.jpg");//placeholder
+        armorList.add(krest);
 
         return armorList;
     }
