@@ -2,6 +2,7 @@ package iq.ven.showdown.server.impl;
 
 import iq.ven.showdown.client.impl.*;
 import iq.ven.showdown.fighting.impl.Lobby;
+import iq.ven.showdown.fighting.impl.ThreadFightPlayerTurn;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
@@ -41,13 +42,25 @@ public class ObjectFromClientParser {
             joinLobby();
         } else if (object instanceof FightStartObject) {
             logger.log(Level.DEBUG, "Got FightStartObject from client " + object);
-            startFight();
+            try {
+                startFight();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else if (object instanceof ThreadFightPlayerTurn) {
+            logger.log(Level.DEBUG, "Got ThreadFightPlayerTurn from client " + object);
+            playerTurnStuff(object);
         }
 
     }
 
-    void startFight() {
+    private void playerTurnStuff(Object object) {
 
+    }
+
+    void startFight() throws IOException {
+        Lobby lobby = AbstractThreadClient.lobbyList.get(AbstractThreadClient.lobbyList.size() - 1);
+        abstractThreadClient.startFight();
     }
 
     void joinLobby() {
@@ -56,7 +69,7 @@ public class ObjectFromClientParser {
                 out.writeObject(new LobbyError());
             } else {
                 abstractThreadClient.connectToLobby(AbstractThreadClient.lobbyList.get(AbstractThreadClient.lobbyList.size() - 1));
-                out.writeObject(AbstractThreadClient.lobbyList.get(AbstractThreadClient.lobbyList.size() - 1).toString());
+                out.writeObject(AbstractThreadClient.lobbyList.get(AbstractThreadClient.lobbyList.size() - 1));
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -70,7 +83,7 @@ public class ObjectFromClientParser {
                 out.writeObject(new LobbyError());
             } else {
                 Lobby lobby = abstractThreadClient.createLobby();
-                out.writeObject(new LobbyObject(lobby.toString()));
+                out.writeObject(lobby);
             }
         } catch (IOException e) {
             e.printStackTrace();

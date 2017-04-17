@@ -3,6 +3,7 @@ package iq.ven.showdownclient.view;
 import iq.ven.showdown.client.impl.*;
 import iq.ven.showdown.client.model.Client;
 import iq.ven.showdown.database.ClientEntity;
+import iq.ven.showdown.fighting.impl.ThreadFight;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
@@ -30,6 +31,7 @@ public class ClientImpl extends Thread implements Client {
     private ObjectInputStream in;
     private ClientEntity clientEntity;
     private static final Logger logger = Logger.getLogger(ClientImpl.class);
+    public static ThreadFight threadFight;
 
     public int getPort() {
         return port;
@@ -160,8 +162,20 @@ public class ClientImpl extends Thread implements Client {
         return false;
     }
 
-    public boolean startFight() {
-        return false;
+    public ThreadFight startFight() {
+         threadFight = null;
+        try {
+            logger.log(Level.INFO, "startFight.startFight sending StartFightObject");
+            out.writeObject(new FightStartObject());
+            logger.log(Level.INFO, "startFight.startFight StartFightObject sent! waiting for fight object");
+            threadFight = (ThreadFight) in.readObject();
+            logger.log(Level.INFO, "startFight.startFight got Fight object " + threadFight);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return threadFight;
     }
 
 

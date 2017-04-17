@@ -1,5 +1,6 @@
 package iq.ven.showdownclient.controller;
 
+import iq.ven.showdown.fighting.impl.ThreadFight;
 import iq.ven.showdownclient.view.ClientImpl;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,6 +17,7 @@ import java.util.ResourceBundle;
 
 public class LobbyController implements Initializable {
     ClientImpl client = LogInController.client;
+    ThreadFight fight;
 
     @FXML
     Button lobbyCreateButton;
@@ -31,6 +33,14 @@ public class LobbyController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         createSetOnAction();
         joinSetOnAction();
+        startFightSetOnAction();
+    }
+
+    private void startFightSetOnAction() {
+        lobbyStartFightButton.setOnAction(event -> {
+            fight = client.startFight();
+            openFightScene();
+        });
     }
 
     private void joinSetOnAction() {
@@ -45,7 +55,7 @@ public class LobbyController implements Initializable {
         });
     }
 
-    private void opeFightScene() {
+    private void openFightScene() {
         Parent root = null;
         Stage stage = (Stage) lobbyStartFightButton.getScene().getWindow();
         try {

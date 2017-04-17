@@ -12,8 +12,8 @@ import java.net.Socket;
 public class Lobby extends Thread implements Serializable {
     private ClientEntity client1;
     private ClientEntity client2;
-    private AbstractThreadClient client1Thread;
-    private AbstractThreadClient client2Thread;
+    transient private AbstractThreadClient client1Thread;
+    transient private AbstractThreadClient client2Thread;
 
 
     public Lobby(ClientEntity client1, AbstractThreadClient client1Thread) {

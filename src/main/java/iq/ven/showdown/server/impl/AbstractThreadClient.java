@@ -2,7 +2,6 @@ package iq.ven.showdown.server.impl;
 
 import iq.ven.showdown.client.impl.InitialDataForServerObject;
 import iq.ven.showdown.client.impl.LogInErrorObject;
-import iq.ven.showdown.client.impl.OnlyOnePlayerInLobbyErrorObject;
 import iq.ven.showdown.client.impl.SuccessfulRegistrationObject;
 import iq.ven.showdown.database.ClientEntity;
 import iq.ven.showdown.database.setup.DBAuthorizeClient;
@@ -109,17 +108,19 @@ public abstract class AbstractThreadClient extends Thread implements Serializabl
 
 
     public void startFight() throws IOException {
-        if (lobby.getClient1() != null && lobby.getClient2() != null) {
-            FightStarter fightStarter = new FightStarter(lobby);
-            fight = fightStarter.startFight();
-            logger.log(Level.INFO, "AbstractThreadClient.startFight fight started " + fight);
-            lobby.getClient1Thread().getOut().writeObject(fight);
-            lobby.getClient2Thread().getOut().writeObject(fight);
-        } else {
+        // if (lobby.getClient1() != null && lobby.getClient2() != null) {
+        FightStarter fightStarter = new FightStarter(lobby);
+        fight = fightStarter.startFight();
+        logger.log(Level.INFO, "AbstractThreadClient.startFight fight started " + fight);
+        lobby.getClient1Thread().getOut().writeObject(fight);
+        logger.log(Level.INFO, "AbstractThreadClient.startFight fight sent to  " + lobby.getClient1().getUsername());
+        lobby.getClient2Thread().getOut().writeObject(fight);
+        logger.log(Level.INFO, "AbstractThreadClient.startFight fight started " + lobby.getClient2().getUsername());
+       /* } else {
             //!TODO show error only 1 player in lobby
             logger.log(Level.ERROR, "AbstractThreadClient.startFight fight didnt started couse only 1 player in lobby OnlyOnePlayerInLobbyErrorObject");
             out.writeObject(new OnlyOnePlayerInLobbyErrorObject());
-        }
+        }*/
     }
 
     public Lobby createLobby() {

@@ -9,13 +9,14 @@ import org.apache.log4j.Logger;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by User on 21.03.2017.
  */
-public class ThreadFight extends Thread implements Fight {
+public class ThreadFight extends Thread implements Fight, Serializable {
     private static final Logger logger = Logger.getLogger(ThreadFight.class);
 
     private ClientEntity client1;
@@ -23,10 +24,10 @@ public class ThreadFight extends Thread implements Fight {
     private List<ThreadFightRound> rounds;
     private Lobby lobby;
 
-    private ObjectInputStream inputClient1;
-    private ObjectOutputStream outputClient1;
-    private ObjectInputStream inputClient2;
-    private ObjectOutputStream outputClient2;
+    transient private ObjectInputStream inputClient1;
+    transient private ObjectOutputStream outputClient1;
+    transient private ObjectInputStream inputClient2;
+    transient private ObjectOutputStream outputClient2;
 
     public ThreadFight(ClientEntity client1, ClientEntity client2, Lobby lobby) {
         this.client1 = client1;
@@ -43,7 +44,7 @@ public class ThreadFight extends Thread implements Fight {
 
     @Override
     public void run() {
-
+/*
         Object client1Turn = null;
         Object client2Turn = null;
 
@@ -76,22 +77,22 @@ public class ThreadFight extends Thread implements Fight {
                 System.out.println("player sent not a turn");
             }
 
-//Check if somebody lost
+            //Check if somebody lost
             checkLosesAndSendInfo(result);
 
-        }
+        }*/
 
-        //!TODO do fight
+      /*  //!TODO do fight
 
-        /*
+        *//**//*
         * if on or both player's hp <=0
         * get player 1 and 2 turns
         * apply turn results
         * return round object
         * apply round results on client side
         * continue
-        * */
-
+        * *//**//*
+*/
 
     }
 
